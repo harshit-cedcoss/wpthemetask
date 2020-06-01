@@ -24,7 +24,7 @@
 	<?php wp_head(); ?>
 </head>
 
-<body class="custom-background">
+<body <?php body_class(); ?>>
 
 	<!-- Navigation -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
