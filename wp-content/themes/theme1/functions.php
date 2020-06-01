@@ -35,5 +35,29 @@ function register_my_menus() {
 		)
 	);
 	add_theme_support( 'post-thumbnails' );
+	set_post_thumbnail_size( 50, 50, array( 'center', 'center' ) ); // 50 pixels wide by 50 pixels tall, crop from the center
+	add_image_size( 'category-thumb', 300, 9999 ); // 300 pixels wide (and unlimited height)
+	the_post_thumbnail( 'category-thumb' );
+	$args = array(
+		'default-color' => '0000ff',
+		'default-image' => get_template_directory_uri() . '/images/wapuu.jpg',
+	);
+	add_theme_support( 'custom-background', $args );
 }
 add_action( 'init', 'register_my_menus' );
+/**
+ * Theme1 function for registering menus
+ */
+function themename_custom_header_setup() {
+	$args = array(
+		'default-image'      => get_template_directory_uri() . 'img/default-image.jpg',
+		'default-text-color' => '000',
+		'width'              => 1000,
+		'height'             => 250,
+		'flex-width'         => true,
+		'flex-height'        => true,
+	);
+	add_theme_support( 'custom-header', $args );
+}
+add_action( 'after_setup_theme', 'themename_custom_header_setup' );
+
