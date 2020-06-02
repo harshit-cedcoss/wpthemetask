@@ -30,22 +30,102 @@
 				<?php
 				if ( have_posts() ) {
 					while ( have_posts() ) {
+						if ( is_user_logged_in() ) {
+							$user = array_shift( $current_user->roles );
+							// $current_user = wp_get_current_user();.
+							if ( $user === 'author' ) {
+								if ( is_page( array( 1865, 1867 ) ) ) {
+									the_post();
+									?>
+						<!-- Blog Post -->
+						<div class="card mb-4">
+							<img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+							<div class="card-body">
+								<h2 class="card-title"><a href="<?php the_permalink(); ?>">Author-<?php the_title(); ?></a></h2>
+								<p class="card-text"><?php the_content(); ?></p>
+								<a href="#" class="btn btn-primary">Read More &rarr;</a>
+							</div>
+							<div class="card-footer text-muted">
+								Posted on <?php the_date(); ?> by
+								<a href="#"><?php the_author(); ?></a>
+							</div>
+						</div>
+									<?php
+								} else {
+									global $wp_query;
+									$wp_query->set_404();
+									status_header( 404 );
+									get_template_part( 404 );
+									exit();
+								}
+							} elseif ( $user === 'subscriber' ) {
+								if ( is_page( 1867 ) ) {
+									the_post();
+									?>
+						<!-- Blog Post -->
+						<div class="card mb-4">
+							<img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+							<div class="card-body">
+								<h2 class="card-title"><a href="<?php the_permalink(); ?>">Subscriber-<?php the_title(); ?></a></h2>
+								<p class="card-text"><?php the_content(); ?></p>
+								<a href="#" class="btn btn-primary">Read More &rarr;</a>
+							</div>
+							<div class="card-footer text-muted">
+								Posted on <?php the_date(); ?> by
+								<a href="#"><?php the_author(); ?></a>
+							</div>
+						</div>
+									<?php
+								} else {
+									global $wp_query;
+									$wp_query->set_404();
+									status_header( 404 );
+									get_template_part( 404 );
+									exit();
+								}
+							} else {
+								// die( $user );.
+								the_post();
+								?>
+						<!-- Blog Post -->
+						<div class="card mb-4">
+							<img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+							<div class="card-body">
+								<h2 class="card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+								<p class="card-text"><?php the_content(); ?></p>
+								<a href="#" class="btn btn-primary">Read More &rarr;</a>
+							</div>
+							<div class="card-footer text-muted">
+								Posted on <?php the_date(); ?> by
+								<a href="#"><?php the_author(); ?></a>
+							</div>
+						</div>
+								<?php
+							}
+						} elseif ( is_page( array( 1865, 1867 ) ) ) {
+							global $wp_query;
+							$wp_query->set_404();
+							status_header( 404 );
+							get_template_part( 404 );
+							exit();
+						} else {
 							the_post();
-						?>
-				<!-- Blog Post -->
-				<div class="card mb-4">
-					<img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
-					<div class="card-body">
-						<h2 class="card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-						<p class="card-text"><?php the_content(); ?></p>
-						<a href="#" class="btn btn-primary">Read More &rarr;</a>
-					</div>
-					<div class="card-footer text-muted">
-						Posted on <?php the_date(); ?> by
-						<a href="#"><?php the_author(); ?></a>
-					</div>
-				</div>
-						<?php
+							?>
+						<!-- Blog Post -->
+						<div class="card mb-4">
+							<img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+							<div class="card-body">
+								<h2 class="card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+								<p class="card-text"><?php the_content(); ?></p>
+								<a href="#" class="btn btn-primary">Read More &rarr;</a>
+							</div>
+							<div class="card-footer text-muted">
+								Posted on <?php the_date(); ?> by
+								<a href="#"><?php the_author(); ?></a>
+							</div>
+						</div>
+								<?php
+						}
 					} // end while
 				} // end if
 				?>
