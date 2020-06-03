@@ -170,3 +170,39 @@ function theme1_support() {
 }
 add_action( 'after_setup_theme', 'theme1_support' );
 
+
+
+add_action( 'template_redirect', 'permission' );
+/**
+ * Author And Subscriber Permissions
+ */
+function permission() {
+	// Set redirect to true by default.
+	$redirect = false;
+	if ( is_user_logged_in() ) {
+		$user_current = wp_get_current_user();
+		$user         = array_shift( $user_current->roles );
+		if ( 'author' === $user ) {
+			$redirect = false;
+		} elseif ( 'subscriber' === $user ) {
+			$redirect = false;
+			if ( is_page( 1865 ) ) {
+				$redirect = true;
+			}
+		} elseif ( 'administrator' === $user ) {
+				$redirect = false;
+		}
+	} elseif ( is_page( array( 1865, 1867 ) ) ) {
+		$redirect = true;
+	}
+	if ( $redirect ) {
+		// $location = get_site_url();
+		// wp_redirect( esc_url( home_url() ), 307 );
+		global $wp_query;
+		$wp_query->set_404();
+		status_header( 404 );
+		get_template_part( 404 );
+		// exit();.
+	}
+}
+
