@@ -50,54 +50,40 @@ if ( ! function_exists( 'add_action' ) ) { // checking if a predefined function 
 	echo 'This site cannot be accessed';
 	exit;
 }
+
 /**
- * Custom class
+ * Custom Post Type
  */
-class Hello_World {
-
-	/**
-	 * Constructor function.
-	 */
-	public function __construct() {
-		add_action( 'init', array( $this, 'custom_post_type' ) );
-	}
-	/**
-	 * Activation.
-	 */
-	public function activate() {
-		// generate a CPT(Custom Post Type).
-		$this->custom_post_type();
-		// Clear the permalinks after the post type has been registered.
-		flush_rewrite_rules();
-	}
-	/**
-	 * Deactivation
-	 */
-	public function deactivate() {
-		// Unregister the post type, so the rules are no longer in memory.
-		unregister_post_type( 'book' );
-		// Clear the permalinks after the post type has been registered.
-		flush_rewrite_rules();
-	}
-	/**
-	 * Custom Post Type
-	 */
-	public function custom_post_type() {
-		register_post_type(
-			'book',
-			array(
-				'public' => true,
-				'label'  => 'Book_Tuts',
-			)
-		);
-	}
-
+function custom_post_type() {
+	register_post_type(
+		'book',
+		array(
+			'public' => true,
+			'label'  => 'Books',
+		)
+	);
 }
-if ( class_exists( 'My_Plugin' ) ) {
-	$my_plugin1 = new Hello_World(); // Object Creation.
+add_action( 'init', 'custom_post_type' );
+/**
+ * Activation.
+ */
+function activate() {
+	custom_post_type();
+	// Clear the permalinks after the post type has been registered.
+	flush_rewrite_rules();
 }
+/**
+ * Deactivation
+ */
+function deactivate() {
+	// Unregister the post type, so the rules are no longer in memory.
+	unregister_post_type( 'book' );
+	// Clear the permalinks after the post type has been registered.
+	flush_rewrite_rules();
+}
+
 // activation.
-register_activation_hook( __FILE__, array( $my_plugin1, 'activate' ) );
+register_activation_hook( __FILE__, 'activate' );
 
 // deactivation.
-register_deactivation_hook( __FILE__, array( $my_plugin1, 'deactivate' ) );
+register_deactivation_hook( __FILE__, 'deactivate' );
