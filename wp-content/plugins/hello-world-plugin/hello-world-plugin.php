@@ -82,7 +82,7 @@ class Hello_World {
 	/**
 	 * Custom Post Type
 	 */
-	protected function custom_post_type() {
+	public function custom_post_type() {
 		register_post_type(
 			'book',
 			array(
