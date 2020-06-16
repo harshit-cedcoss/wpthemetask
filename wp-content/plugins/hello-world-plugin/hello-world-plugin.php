@@ -52,32 +52,23 @@ if ( ! function_exists( 'add_action' ) ) { // checking if a predefined function 
 }
 
 /**
- * Custom Post Type
- */
-function custom_post_type() {
-	register_post_type(
-		'book',
-		array(
-			'public' => true,
-			'label'  => 'Books',
-		)
-	);
-}
-add_action( 'init', 'custom_post_type' );
-/**
  * Activation.
  */
 function activate() {
-	custom_post_type();
+	add_op();
 	// Clear the permalinks after the post type has been registered.
 	flush_rewrite_rules();
+}
+function add_op() {
+	// adding a new option.
+	add_option( 'installed_on' );
 }
 /**
  * Deactivation
  */
 function deactivate() {
-	// Unregister the post type, so the rules are no longer in memory.
-	unregister_post_type( 'book' );
+	// Deleting Option.
+	delete_option( 'installed_on' );
 	// Clear the permalinks after the post type has been registered.
 	flush_rewrite_rules();
 }
