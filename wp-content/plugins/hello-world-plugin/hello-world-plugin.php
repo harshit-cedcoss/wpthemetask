@@ -55,13 +55,10 @@ if ( ! function_exists( 'add_action' ) ) { // checking if a predefined function 
  * Activation.
  */
 function activate() {
-	add_op();
-	// Clear the permalinks after the post type has been registered.
-	flush_rewrite_rules();
-}
-function add_op() {
 	// adding a new option.
 	add_option( 'installed_on' );
+	// Clear the permalinks after the post type has been registered.
+	flush_rewrite_rules();
 }
 /**
  * Deactivation
