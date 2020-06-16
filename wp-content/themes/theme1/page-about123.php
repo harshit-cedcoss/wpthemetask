@@ -17,38 +17,20 @@
 ?>
 <?php get_header(); ?>
 	<!-- Page Content -->
-
 	<div class="container">
 
 		<div class="row">
-		<?php if ( get_theme_mod( 'basic-author-callout-display-options' ) === 'Yes' ) { ?>
-				<!-- <div class="row-padding author"> -->
-					<div class="col-3 author-image">
-						<img src="<?php echo esc_html( wp_get_attachment_url( get_theme_mod( 'basic-author-callout-image' ) ) ); ?>" alt="Author Image">
-					</div>
-					<div class="col-9 author-content">
-					<?php
-						$author_text = get_theme_mod( 'basic-author-callout-text' );
-					if ( '' !== $author_text ) {
-						echo esc_html( sanitize_text_field( wpautop( $author_text ) ) );
-					} else {
-						echo 'Edit this by going to your Dashboard -> Appearance -> Customise -> Author Editor';
-					}
-					?>
-					</div>
-				<!-- </div>  -->
-		<?php } ?>
 
 			<!-- Blog Entries Column -->
 			<div class="col-md-8">
 
 				<h1 class="my-4">Page Heading
-					<small>Secondary Text</small>
+					<small>(page-about.php)</small>
 				</h1>
 				<?php
 				if ( have_posts() ) {
 					while ( have_posts() ) {
-						// do_action( 'template_redirect' );.
+						do_action( 'template_redirect' );
 							the_post();
 						?>
 					<!-- Blog Post -->
@@ -91,19 +73,10 @@
 
 			</div>
 
-<?php //get_sidebar(); ?>
+<?php get_sidebar(); ?>
 
 		</div>
 		<!-- /.row -->
-<?php
-// If comments are open or we have at least one comment, load up the comment template.
-if ( comments_open() || get_comments_number() ) :
-	comments_template();
-endif;
-?>
-<!-- <div class="pagination">
-	<?php // paginate_comments_links(); ?>
-</div> -->
 
 	</div>
 	<!-- /.container -->
