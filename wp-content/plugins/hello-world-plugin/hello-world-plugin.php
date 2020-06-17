@@ -79,8 +79,9 @@ register_deactivation_hook( __FILE__, 'deactivate' );
  * $content filtering
  */
 function helloworld_filter_content( $content ) {
+	$url = get_permalink();
 	if ( is_single() ) {
-		return '<a href="https://twitter.com/intent/tweet?url=<?=urlencode($url)?>">The Link for upload on twitter</a>' . $content;
+		return '<a href="https://twitter.com/intent/tweet?url=' . urlencode( $url ) . '">Link To Twitter</a>' . $content;
 	}
 }
 add_filter( 'the_content', 'helloworld_filter_content' );
