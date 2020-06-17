@@ -78,10 +78,13 @@ register_deactivation_hook( __FILE__, 'deactivate' );
 /**
  * $content filtering
  */
+
 function helloworld_filter_content( $content ) {
-	$url = get_permalink();
+	global $post;
+	$url   = get_permalink();
+	$count = strlen( html_entity_decode( strip_shortcodes( wp_strip_all_tags( $post->post_content, true ) ) ) );
 	if ( is_single() ) {
-		return '<a href="https://twitter.com/intent/tweet?url=' . urlencode( $url ) . '">Link To Twitter</a>' . $content;
+		return '<a href="https://twitter.com/intent/tweet?url=' . urlencode( $url ) . '">Link To Twitter</a>' . $content . 'Number of characters in post: ' . $count;
 	}
 }
 add_filter( 'the_content', 'helloworld_filter_content' );
