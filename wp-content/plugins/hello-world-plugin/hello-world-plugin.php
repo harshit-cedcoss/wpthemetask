@@ -42,7 +42,7 @@ along with {Hello World}. If not, see {URI to Plugin License}.
  * Security measures.
  */
 
-if ( ! defined( 'ABSPATH' ) ) { // global variable is to defined.
+if ( ! defined( 'ABSPATH' ) ) { // global variable, is to be defined.
 	die( 'Canot access this site' );
 }
 
@@ -75,3 +75,14 @@ register_activation_hook( __FILE__, 'activate' );
 
 // deactivation.
 register_deactivation_hook( __FILE__, 'deactivate' );
+/**
+ * $content filtering
+ */
+function helloworld_filter_content( $content ) {
+	if ( is_single() ) {
+		return '<a href="https://twitter.com/intent/tweet?url=<?=urlencode($url)?>">The Link for upload on twitter</a>' . $content . ' was filtered';
+	} else {
+		return $content;
+	}
+}
+add_filter( 'the_content', 'helloworld_filter_content' );
