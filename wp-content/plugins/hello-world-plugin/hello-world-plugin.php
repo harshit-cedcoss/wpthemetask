@@ -80,9 +80,7 @@ register_deactivation_hook( __FILE__, 'deactivate' );
  */
 function helloworld_filter_content( $content ) {
 	if ( is_single() ) {
-		return '<a href="https://twitter.com/intent/tweet?url=<?=urlencode($url)?>">The Link for upload on twitter</a>' . $content . ' was filtered';
-	} else {
-		return $content;
+		return '<a href="https://twitter.com/intent/tweet?url=<?=urlencode($url)?>">The Link for upload on twitter</a>' . $content;
 	}
 }
 add_filter( 'the_content', 'helloworld_filter_content' );
