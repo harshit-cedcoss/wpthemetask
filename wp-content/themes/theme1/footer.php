@@ -13,6 +13,10 @@
 	<!-- Footer -->
 		<footer class="py-5 bg-dark">
 			<div class="container">
+				<?php $option = get_option( 'wporg_options' ); ?>
+			<a href="<?php echo esc_html( $option['wporg_field_facebook_link'] ); ?>"><img src="" alt="facebook.com"></a>
+			<a href="<?php echo esc_html( $option['wporg_field_twitter_link'] ); ?>"><img src="" alt="twitter.com"></a>
+
 			<p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
 			</div>
 		<!-- /.container -->

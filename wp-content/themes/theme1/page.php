@@ -48,7 +48,6 @@
 				<?php
 				if ( have_posts() ) {
 					while ( have_posts() ) {
-						// do_action( 'template_redirect' );.
 							the_post();
 						?>
 					<!-- Blog Post -->
@@ -91,7 +90,7 @@
 
 			</div>
 
-<?php //get_sidebar(); ?>
+<?php // get_sidebar(); ?>
 
 		</div>
 		<!-- /.row -->
