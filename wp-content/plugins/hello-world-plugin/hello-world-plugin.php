@@ -129,7 +129,7 @@ function wporg_settings_init() {
 		'wporg'
 	);
 
-	// register a new section in the "wporg" page.
+	// register a new section for social links in the "wporg" page.
 	add_settings_section(
 		'wporg_section_developers_social_links',
 		__( 'Social Links.', 'wporg' ),
@@ -165,7 +165,7 @@ function wporg_settings_init() {
 			'wporg_custom_data' => 'custom',
 		)
 	);
-	// register a new "Facebook" field in the "wporg_section_developers" section, inside the "wporg" page.
+	// register a new "Facebook" field in the "wporg_section_developers_social_links" section, inside the "wporg" page.
 	add_settings_field(
 		'wporg_field_facebook_link', // as of WP 4.6 this value is used only internally
 		// use $args' label_for to populate the id inside the callback.
@@ -179,7 +179,7 @@ function wporg_settings_init() {
 			'wporg_custom_data' => 'custom',
 		)
 	);
-	// register a new "Facebook" field in the "wporg_section_developers" section, inside the "wporg" page.
+	// register a new "Twitter" field in the "wporg_section_developers_social_links" section, inside the "wporg" page.
 	add_settings_field(
 		'wporg_field_twitter_link', // as of WP 4.6 this value is used only internally
 		// use $args' label_for to populate the id inside the callback.
@@ -200,22 +200,29 @@ function wporg_settings_init() {
  */
 add_action( 'admin_init', 'wporg_settings_init' );
 
-/**
- * Custom option and settings:
- * callback functions
- */
-
 // developers section cb.
 
 // section callbacks can accept an $args parameter, which is an array.
 // $args have the following keys defined: title, id, callback.
 // the values are defined at the add_settings_section() function.
+/**
+ * Custom option and settings:
+ * callback functions
+ *
+ * @param [array] $args array for the arguments passed in section(here predefined).
+ * @return void
+ */
 function wporg_section_developers_cb( $args ) {
 	?>
 	<p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Follow the white rabbit.', 'wporg' ); ?></p>
 	<?php
 }
-
+/**
+ * Callback function for new section created.
+ *
+ * @param [array] $args array for the arguments passed in section(here predefined).
+ * @return void
+ */
 function wporg_section_developers_social_links_cb( $args ) {
 	?>
 	<p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Find the social links here.', 'wporg' ); ?></p>
@@ -271,6 +278,12 @@ function wporg_field_text_cb( $args ) {
 	<input type="text" id="<?php echo esc_attr( $args['label_for'] ); ?>" data-custom="<?php echo esc_attr( $args['wporg_custom_data'] ); ?>" name="wporg_options[<?php echo esc_attr( $args['label_for'] ); ?>]" >
 	<?php
 }
+/**
+ * Callback function for facebook.
+ *
+ * @param [array] $args array for the arguments passed in field.
+ * @return void
+ */
 function wporg_field_facebook_link_cb( $args ) {
 	// get the value of the setting we've registered with register_setting().
 	$options = get_option( 'wporg_options' );
@@ -279,6 +292,12 @@ function wporg_field_facebook_link_cb( $args ) {
 	<input type="text" id="<?php echo esc_attr( $args['label_for'] ); ?>" data-custom="<?php echo esc_attr( $args['wporg_custom_data'] ); ?>" name="wporg_options[<?php echo esc_attr( $args['label_for'] ); ?>]" >
 	<?php
 }
+/**
+ * Callback function for twitter.
+ *
+ * @param [array] $args array for the arguments passed in field.
+ * @return void
+ */
 function wporg_field_twitter_link_cb( $args ) {
 	// get the value of the setting we've registered with register_setting().
 	$options = get_option( 'wporg_options' );
@@ -351,7 +370,7 @@ function wporg_options_page_html() {
  * @return void
  */
 function wporg_custom_post_type() {
-			$labels       = array(
+			$labels = array(
 				'name'                  => _x( 'Products', 'Post type general name', 'wporg_product' ),
 				'singular_name'         => _x( 'Product', 'Post type singular name', 'wporg_product' ),
 				'menu_name'             => _x( 'Product Menu', 'Admin Menu text', 'wporg_product' ),
@@ -372,7 +391,7 @@ function wporg_custom_post_type() {
 				'uploaded_to_this_item' => __( 'Upload to this product', 'wporg_product' ),
 				'featured_image'        => _x( 'Product Cover Image', 'Overrides the featured image phrase for this post type', 'wporg_product' ),
 			);
-			$args = array(
+			$args   = array(
 				'labels'             => $labels,
 				'public'             => true,
 				'description'        => __( 'Here the products are described', 'wporg_product' ),
@@ -398,7 +417,7 @@ function wporg_custom_post_type() {
 add_action( 'init', 'wporg_custom_post_type' );
 register_activation_hook( __FILE__, 'my_rewrite_flush' );
 /**
- * 
+ * Flushing the rewrite rules.
  *
  * @return void
  */
@@ -413,61 +432,11 @@ function my_rewrite_flush() {
 	// You should *NEVER EVER* do this on every page load!!
 	flush_rewrite_rules();
 }
-
-// /**
-//  * Register a custom post type called "book".
-//  *
-//  * @see get_post_type_labels() for label keys.
-//  */
-// function wpdocs_codex_book_init() {
-// 	$labels = array(
-// 		'name'                  => _x( 'Books', 'Post type general name', 'textdomain' ),
-// 		'singular_name'         => _x( 'Book', 'Post type singular name', 'textdomain' ),
-// 		'menu_name'             => _x( 'Books', 'Admin Menu text', 'textdomain' ),
-// 		'name_admin_bar'        => _x( 'Book', 'Add New on Toolbar', 'textdomain' ),
-// 		'add_new'               => __( 'Add New', 'textdomain' ),
-// 		'add_new_item'          => __( 'Add New Book', 'textdomain' ),
-// 		'new_item'              => __( 'New Book', 'textdomain' ),
-// 		'edit_item'             => __( 'Edit Book', 'textdomain' ),
-// 		'view_item'             => __( 'View Book', 'textdomain' ),
-// 		'all_items'             => __( 'All Books', 'textdomain' ),
-// 		'search_items'          => __( 'Search Books', 'textdomain' ),
-// 		'parent_item_colon'     => __( 'Parent Books:', 'textdomain' ),
-// 		'not_found'             => __( 'No books found.', 'textdomain' ),
-// 		'not_found_in_trash'    => __( 'No books found in Trash.', 'textdomain' ),
-// 		'featured_image'        => _x( 'Book Cover Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'textdomain' ),
-// 		'set_featured_image'    => _x( 'Set cover image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-// 		'remove_featured_image' => _x( 'Remove cover image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-// 		'use_featured_image'    => _x( 'Use as cover image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-// 		'archives'              => _x( 'Book archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'textdomain' ),
-// 		'insert_into_item'      => _x( 'Insert into book', 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'textdomain' ),
-// 		'uploaded_to_this_item' => _x( 'Uploaded to this book', 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'textdomain' ),
-// 		'filter_items_list'     => _x( 'Filter books list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'textdomain' ),
-// 		'items_list_navigation' => _x( 'Books list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'textdomain' ),
-// 		'items_list'            => _x( 'Books list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'textdomain' ),
-// 	);
- 
-// 	$args = array(
-// 		'labels'             => $labels,
-// 		'public'             => true,
-// 		'publicly_queryable' => true,
-// 		'show_ui'            => true,
-// 		'show_in_menu'       => true,
-// 		'query_var'          => true,
-// 		'rewrite'            => array( 'slug' => 'book' ),
-// 		'capability_type'    => 'post',
-// 		'has_archive'        => true,
-// 		'hierarchical'       => false,
-// 		'menu_position'      => null,
-// 		'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' ),
-// 		'show_in_rest'       => true,
-// 	);
- 
-// 	register_post_type( 'book', $args );
-// }
- 
-// add_action( 'init', 'wpdocs_codex_book_init' );
-
+/**
+ * Altering the main query for custom post type.
+ *
+ * @param [array] $query array for the arguments passed in field.
+ */
 function wporg_add_custom_post_types( $query ) {
 	if ( is_home() && $query->is_main_query() ) {
 		$query->set( 'post_type', array( 'post', 'page', 'wporg_product' ) );
@@ -475,7 +444,11 @@ function wporg_add_custom_post_types( $query ) {
 	return $query;
 }
 add_action( 'pre_get_posts', 'wporg_add_custom_post_types' );
-
+/**
+ * Our Custom Taxonomy.
+ *
+ * @return void
+ */
 function wporg_register_taxonomy_course() {
 	$labels = array(
 		'name'              => _x( 'Courses', 'taxonomy general name' ),
