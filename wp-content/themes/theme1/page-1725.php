@@ -46,7 +46,7 @@
 							<a href="#"><?php the_author(); ?></a>
 						</div>
 					</div>
-							<?php
+						<?php
 					} // end while
 				} // end if
 				?>

@@ -21,6 +21,7 @@ function themeslug_enqueue_style() {
 function themeslug_enqueue_script() {
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'bootstrap1', get_template_directory_uri() . '/vendor/bootstrap/js/bootstrap.bundle.min.js', array( 'jquery' ), '1.1', true );
+	//wp_enqueue_script( 'example-ajax-script', plugins_url( '/js/myjquery.js', __FILE__ ), array( 'jquery' ) );
 }
 
 add_action( 'wp_enqueue_scripts', 'themeslug_enqueue_style' );
@@ -243,14 +244,14 @@ class My_Widget extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 		// outputs the content of the widget.
-		echo esc_html( $args['before_widget'] );
+		echo $args['before_widget'];
 		if ( ! empty( $instance['title'] ) ) {
-			echo esc_html( $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'] );
+			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
 		}
 		echo '<div class="textwidget">';
 		echo esc_html__( $instance['text'], 'text_domain' );
 		echo '</div>';
-		echo esc_html( $args['after_widget'] );
+		echo $args['after_widget'];
 	}
 
 	/**

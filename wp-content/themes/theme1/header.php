@@ -23,7 +23,7 @@
 
 	<?php wp_head(); ?>
 </head>
-<script src="https://code.iconify.design/1/1.0.6/iconify.min.js"></script>
+<!-- <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> -->
 <body <?php body_class(); ?>>
 
 	<!-- Navigation -->

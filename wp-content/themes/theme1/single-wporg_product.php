@@ -1,6 +1,6 @@
 <?php
 /**
- * The Custon Post template file
+ * The Post template file
  *
  * This is the most generic template file in a WordPress theme
  * and one of the two required files for a theme (the other being style.css).
@@ -28,14 +28,9 @@
 					<small>Secondary Text</small>
 				</h1>
 				<?php
-				$args = array(
-					'post_type'      => 'wporg_product',
-					'posts_per_page' => 10,
-				);
-				$loop = new WP_Query( $args );
 				if ( have_posts() ) {
-					while ( $loop->have_posts() ) {
-							$loop->the_post();
+					while ( have_posts() ) {
+							the_post();
 						?>
 				<!-- Blog Post -->
 				<div class="card mb-4">
@@ -77,7 +72,7 @@
 
 			</div>
 
-<?php // get_sidebar(); ?>
+<?php get_sidebar(); ?>
 
 		</div>
 		<!-- /.row -->

@@ -87,6 +87,7 @@ function helloworld_filter_content( $content ) {
 	if ( is_single() ) {
 		return '<a href="https://twitter.com/intent/tweet?url=' . rawurlencode( $url ) . '">Link To Twitter</a>' . $content . 'Number of characters in post: <b>' . $count . '</b>';
 	}
+	return $content;
 }
 add_filter( 'the_content', 'helloworld_filter_content' );
 /**
@@ -259,6 +260,7 @@ function wporg_field_pill_cb( $args ) {
 		<?php esc_html_e( 'You take the red pill and you stay in Wonderland and I show you how deep the rabbit-hole goes.', 'wporg' ); ?>
 	</p>
 
+
 	<?php
 }
 /**
@@ -276,6 +278,7 @@ function wporg_field_text_cb( $args ) {
 	// output the field.
 	?>
 	<input type="text" id="<?php echo esc_attr( $args['label_for'] ); ?>" data-custom="<?php echo esc_attr( $args['wporg_custom_data'] ); ?>" name="wporg_options[<?php echo esc_attr( $args['label_for'] ); ?>]" >
+	<br><br><button type="button" class="ajax">Submit</button>
 	<?php
 }
 /**
@@ -348,7 +351,19 @@ function wporg_options_page_html() {
 	// show error/update messages.
 	settings_errors( 'wporg_messages' );
 	?>
-	<div class="wrap">
+	<div class="wrap">		
+		<table>
+				<tbody>
+				<tr>
+					<td><input class="pref" checked="checked" name="book" type="radio" value="Sycamore Row" />Sycamore Row</td>
+					<td>John Grisham</td>
+				</tr>
+				<tr>
+					<td><input class="pref" name="book" type="radio" value="Dark Witch" />Dark Witch</td>
+					<td>Nora Roberts</td>
+				</tr>
+			</tbody>
+		</table>
 	<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 	<form action="options.php" method="post">
 		<?php
@@ -407,7 +422,7 @@ function wporg_custom_post_type() {
 				'show_in_rest'       => false,
 				'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' ),
 				'taxonomies'         => array( 'category', 'post_tag' ),
-				'menu_icon'          => 'none',
+			//	'menu_icon'          => 'book',
 				'map_meta_cap'       => true,
 				'query-var'          => true,
 			// 'register_meta_box_cb' => 'wporg_dashboard_widget_render',
@@ -475,3 +490,200 @@ function wporg_register_taxonomy_course() {
 	register_taxonomy( 'course', array( 'wporg_product' ), $args );
 }
 add_action( 'init', 'wporg_register_taxonomy_course' );
+/**
+ * Enqueuing js file and creating a global object
+ *
+ * @return void
+ */
+function example_ajax_enqueue() {
+
+	// Enqueue javascript on the frontend.
+	wp_enqueue_script(
+		'example-ajax-script',
+		plugins_url( '/js/myjquery.js', __FILE__ ),
+		array( 'jquery' ),
+		'1.0.0',
+		true
+	);
+
+	// The wp_localize_script allows us to output the ajax_url path for our script to use.
+	wp_localize_script(
+		'example-ajax-script',
+		'example_ajax_obj',
+		array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			'nonce'   => wp_create_nonce( 'ajax-nonce' ),
+		)
+	);
+}
+add_action( 'wp_enqueue_scripts', 'example_ajax_enqueue' );
+/**
+ * Ajax handler function for example
+ *
+ * @return void
+ */
+function example_ajax_request() {
+
+	$nonce = $_POST['nonce'];
+
+	if ( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) ) {
+		die( 'Nonce value cannot be verified.' );
+	}
+
+	// The $_REQUEST contains all the data sent via ajax.
+	if ( isset( $_POST ) ) {
+
+		$fruit = $_POST['fruit'];
+
+		// Let's take the data that was sent and do something with it.
+		if ( 'Banana' === $fruit ) {
+			$fruit = 'Apple';
+		} else {
+			$fruit = 'Mango';
+		}
+
+		// Now we'll return it to the javascript function
+		// Anything outputted will be returned in the response.
+		echo esc_html( $fruit );
+
+		// If you're debugging, it might be useful to see what was sent in the $_REQUEST
+		// print_r($_REQUEST);.
+
+	}
+
+	// Always die in functions echoing ajax content.
+	die();
+}
+
+add_action( 'wp_ajax_example_ajax_request', 'example_ajax_request' );
+
+// If you wanted to also use the function for non-logged in users (in a theme for example).
+add_action( 'wp_ajax_nopriv_example_ajax_request', 'example_ajax_request' );
+/**
+ * Function for feedback form.
+ *
+ * @param [string] $content Fetches the content.
+ *
+ * function for filtering.
+ */
+function feedback_filter( $content ) {
+	if ( is_page( 1725 ) ) {
+		$form     = '<h1>Give us your feedback</h1>
+					<div class="form-group">
+						<lable>Name:</lable>
+						<input type="text" class="form" id="form_name" palceholder="Name" >
+					</div>
+					<div class="form-group">
+						<lable>Email Id:</lable>
+						<input type="email" id="form_email" class="form" palceholder="Email-ID" ><br>
+					</div>
+					<div class="text-area">
+						<lable>Feedback:</lable>
+						<textarea id="form_feedback" class="form" palceholder="Feedback" ></textarea><br>
+					</div>
+					<button type="submit" class="btn btn-primary" id="btn_form_feedback" >Submit</button><br>';
+		$content .= $form;
+	}
+	return $content;
+}
+add_filter( 'the_content', 'feedback_filter' );
+/**
+ * Custom-Post named Feedback
+ *
+ * @return void
+ */
+function wporg_custom_post_feedback() {
+	$labels = array(
+		'name'                  => _x( 'Feedbacks', 'Post type general name', 'feedback' ),
+		'singular_name'         => _x( 'Feedback', 'Post type singular name', 'feedback' ),
+		'menu_name'             => _x( 'Feedback', 'Admin Menu text', 'feedback' ),
+		'add_new'               => _x( 'Add New', 'feedback', 'feedback' ),
+		'add_new_item '         => __( 'Add New Feedback', 'feedback' ),
+		'edit_item'             => __( 'Edit Feedback', 'feedback' ),
+		'new_item'              => __( 'New Feedback', 'feedback' ),
+		'name_admin_bar'        => _x( 'Feedback', 'Add new on toolbar', 'feedback' ),
+		'view_item'             => __( 'View Feedback', 'feedback' ),
+		'all_items'             => __( 'All Feedback', 'feedback' ),
+		'search_items'          => __( 'Search Feedback', 'feedback' ),
+		'not_found'             => __( 'No feedback found', 'feedback' ),
+		'not_found_in_trash'    => __( 'No feedbacks found in trash', 'feedback' ),
+		'parent_items_colon'    => __( 'Parent Feedback', 'feedback' ),
+		'archives'              => __( 'Archives', 'feedback' ),
+		'attributes'            => __( 'Attributes', 'feedback' ),
+		'insert_into_item'      => __( 'Insert into feedback', 'feedback' ),
+		'uploaded_to_this_item' => __( 'Upload to this feedback', 'feedback' ),
+	);
+	$args   = array(
+		'labels'             => $labels,
+		'public'             => true,
+		'description'        => __( 'Here the feedbacks are described', 'feedback' ),
+		'has_archive'        => true,
+		'rewrite'            => array( 'slug' => 'feedback' ), // my custom slug.
+		'publicly_queryable' => true,
+		'show_ui'            => true,
+		'show_in_menu'       => true,
+		'show_in_nav_menu'   => true,
+		'show_in_admin_bar'  => true,
+		'capability_type'    => 'post',
+		'hierarchical'       => false,
+		'show_in_rest'       => false,
+		'supports'           => array( 'title', 'editor', 'author', 'excerpt', 'comments' ),
+		'map_meta_cap'       => true,
+		'query-var'          => true,
+	);
+	register_post_type( 'feedback', $args );
+}
+add_action( 'init', 'wporg_custom_post_feedback' );
+register_activation_hook( __FILE__, 'my_rewrite_flush_feedback' );
+/**
+ * Flushing the rewrite rules.
+ *
+ * @return void
+ */
+function my_rewrite_flush_feedback() {
+	// First, we "add" the custom post type via the above written function.
+	// Note: "add" is written with quotes, as CPTs don't get added to the DB,
+	// They are only referenced in the post_type column with a post entry,
+	// when you add a post of this CPT.
+	wporg_custom_post_feedback();
+
+	// ATTENTION: This is *only* done during plugin activation hook in this example!
+	// You should *NEVER EVER* do this on every page load!!
+	flush_rewrite_rules();
+}
+/**
+ * Feedback ajax handler.
+ */
+function feedback_ajax_request() {
+
+	$nonce = $_POST['nonce'];
+
+	if ( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) ) {
+		die( 'Nonce value cannot be verified.' );
+	}
+
+	// The $_REQUEST contains all the data sent via ajax.
+	if ( isset( $_POST ) ) {
+		$email    = isset( $_POST['email'] ) ? wp_unslash( $_POST['email'] ) : '';
+		$feedback = isset( $_POST['feedback'] ) ? wp_unslash( $_POST['feedback'] ) : '';
+		$name     = isset( $_POST['name'] ) ? wp_unslash( $_POST['name'] ) : '';
+		// Create post object.
+		$my_post = array(
+			'post_title'   => wp_strip_all_tags( $name ),
+			'post_content' => wp_strip_all_tags( $feedback ) . '<br><a href="' . $email . '"><i>' . $email . '</i></a>',
+			'post_status'  => 'publish',
+			'post_type'    => 'feedback',
+			'post_author'  => 1,
+		);
+		// Insert the post into the database.
+		wp_insert_post( $my_post );
+	}
+	echo 'Feedback Saved';
+	// Always die in functions echoing ajax content.
+	die();
+}
+
+add_action( 'wp_ajax_feedback_request', 'feedback_ajax_request' );
+
+// If you wanted to also use the function for non-logged in users (in a theme for example).
+add_action( 'wp_ajax_nopriv_feedback_request', 'feedback_ajax_request' );
