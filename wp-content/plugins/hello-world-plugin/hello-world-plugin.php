@@ -569,19 +569,19 @@ add_action( 'wp_ajax_nopriv_example_ajax_request', 'example_ajax_request' );
 function feedback_filter( $content ) {
 	if ( is_page( 1725 ) ) {
 		$form     = '<h1>Give us your feedback</h1>
-					<div class="form-group">
-						<lable>Name:</lable>
-						<input type="text" class="form" id="form_name" palceholder="Name" >
-					</div>
-					<div class="form-group">
-						<lable>Email Id:</lable>
-						<input type="email" id="form_email" class="form" palceholder="Email-ID" ><br>
-					</div>
-					<div class="text-area">
-						<lable>Feedback:</lable>
-						<textarea id="form_feedback" class="form" palceholder="Feedback" ></textarea><br>
-					</div>
-					<button type="submit" class="btn btn-primary" id="btn_form_feedback" >Submit</button><br>';
+		<div class="form-group">
+			<lable>Name:</lable>
+			<input type="text" class="form" id="form_name" palceholder="Name" >
+		</div>
+		<div class="form-group">
+			<lable>Email Id:</lable>
+			<input type="email" id="form_email" class="form" palceholder="Email-ID" ><br>
+		</div>
+		<div class="text-area">
+			<lable>Feedback:</lable>
+			<textarea id="form_feedback" class="form" palceholder="Feedback" ></textarea><br>
+		</div>
+		<button type="submit" class="btn btn-primary" id="btn_form_feedback" >Submit</button><br>';
 		$content .= $form;
 	}
 	return $content;
