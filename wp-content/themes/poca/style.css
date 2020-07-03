@@ -450,15 +450,15 @@ ul {
 .classynav ul li.megamenu-item > a::after {
   color: #ffffff; }
 
-.breakpoint-off .classynav ul li .dropdown {
+.breakpoint-off .classynav ul li .sub-menu {
   background-color: #000000; }
 
-.classynav ul li .dropdown li a {
+.classynav ul li .sub-menu li a {
   border-bottom: none;
   height: 40px; }
 
-.classynav ul li .dropdown li .dropdown li .dropdown li a,
-.classynav ul li .dropdown li .dropdown li a {
+.classynav ul li .sub-menu li .sub-menu li .sub-menu li a,
+.classynav ul li .sub-menu li .sub-menu li a {
   border-bottom: none; }
 
 .top-search-area {
@@ -1396,13 +1396,13 @@ ul {
       font-weight: bold;
       letter-spacing: 1px; }
 
-.tags-list {
+.tagcloud {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap; }
-  .tags-list li a {
+  .tagcloud a {
     display: inline-block;
     padding: 8px 20px;
     border: 1px solid #ebebeb;
@@ -1412,7 +1412,7 @@ ul {
     font-size: 12px;
     font-weight: 600;
     margin: 3px; }
-    .tags-list li a:focus, .tags-list li a:hover {
+    .tagcloud a:focus, .tagcloud a:hover {
       background-color: #f55656;
       color: #ffffff; }
 

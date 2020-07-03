@@ -297,5 +297,5 @@ add_action(
 );
 
 require get_stylesheet_directory() . '/inc/customizer.php';
-new TheMinimalist_Customizer();
+new TheMinimalist_Customizer() ;
 

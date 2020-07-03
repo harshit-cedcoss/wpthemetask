@@ -320,52 +320,52 @@ img {
   border-bottom: 1px solid #f2f4f8;
   padding: 8px 12px;
 }
-.classynav ul li .dropdown li a {
+.classynav ul li .sub-menu li a {
   border-bottom: 1px solid rgba(242, 244, 248, 0.7);
 }
-.classynav ul li .dropdown li:last-child a {
+.classynav ul li .sub-menu li:last-child a {
   border-bottom: none;
 }
-.classynav ul li .dropdown li .dropdown li a {
+.classynav ul li .sub-menu li .sub-menu li a {
   border-bottom: 1px solid rgba(242, 244, 248, 0.7);
 }
-.classynav ul li .dropdown li .dropdown li:last-child a {
+.classynav ul li .sub-menu li .sub-menu li:last-child a {
   border-bottom: none;
 }
-.classynav ul li .dropdown li .dropdown li .dropdown li a {
+.classynav ul li .sub-menu li .sub-menu li .sub-menu li a {
   border-bottom: 1px solid rgba(242, 244, 248, 0.7);
 }
-.classynav ul li .dropdown li .dropdown li .dropdown li:last-child a {
+.classynav ul li .sub-menu li .sub-menu li .sub-menu li:last-child a {
   border-bottom: none;
 }
-.classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li a {
+.classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li a {
   border-bottom: 1px solid rgba(242, 244, 248, 0.7);
 }
-.classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li:last-child a {
+.classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li:last-child a {
   border-bottom: none;
 }
-.classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li a {
+.classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li a {
   border-bottom: 1px solid rgba(242, 244, 248, 0.7);
 }
-.classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li:last-child a {
+.classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li:last-child a {
   border-bottom: none;
 }
-.classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li a {
+.classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li a {
   border-bottom: 1px solid rgba(242, 244, 248, 0.7);
 }
-.classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li:last-child a {
+.classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li:last-child a {
   border-bottom: none;
 }
-.classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li a {
+.classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li a {
   border-bottom: 1px solid rgba(242, 244, 248, 0.7);
 }
-.classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li:last-child a {
+.classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li:last-child a {
   border-bottom: none;
 }
-.classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li a {
+.classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li a {
   border-bottom: 1px solid rgba(242, 244, 248, 0.7);
 }
-.classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li:last-child a {
+.classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li:last-child a {
   border-bottom: none;
 }
 /* Desktop Area CSS */
@@ -378,7 +378,7 @@ img {
   -ms-grid-row-align: center;
   align-items: center;
 }
-.breakpoint-off .classynav ul li .dropdown {
+.breakpoint-off .classynav ul li .sub-menu {
   width: 180px;
   position: absolute;
   background-color: #ffffff;
@@ -393,39 +393,39 @@ img {
   visibility: hidden;
   padding: 10px 0;
 }
-.breakpoint-off .classynav ul li .dropdown li .dropdown {
+.breakpoint-off .classynav ul li .sub-menu li .sub-menu {
   top: 10px;
   left: 180px;
   z-index: 200;
   opacity: 0;
   visibility: hidden;
 }
-.breakpoint-off .classynav ul li .dropdown li .dropdown li .dropdown,
-.breakpoint-off .classynav ul li .dropdown li .dropdown li .dropdown li .dropdown,
-.breakpoint-off .classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown,
-.breakpoint-off .classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown,
-.breakpoint-off .classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown,
-.breakpoint-off .classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown,
-.breakpoint-off .classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown,
-.breakpoint-off .classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown {
+.breakpoint-off .classynav ul li .sub-menu li .sub-menu li .sub-menu,
+.breakpoint-off .classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu,
+.breakpoint-off .classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu,
+.breakpoint-off .classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu,
+.breakpoint-off .classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu,
+.breakpoint-off .classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu,
+.breakpoint-off .classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu,
+.breakpoint-off .classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu {
   opacity: 0;
   visibility: hidden;
   top: 120%;
 }
-.breakpoint-off .classynav ul li:hover .dropdown {
+.breakpoint-off .classynav ul li:hover .sub-menu {
   opacity: 1;
   visibility: visible;
   top: 100%;
 }
-.breakpoint-off .classynav ul li .dropdown li:hover .dropdown,
-.breakpoint-off .classynav ul li .dropdown li .dropdown li:hover .dropdown,
-.breakpoint-off .classynav ul li .dropdown li .dropdown li .dropdown li:hover .dropdown,
-.breakpoint-off .classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li:hover .dropdown,
-.breakpoint-off .classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li:hover .dropdown,
-.breakpoint-off .classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li:hover .dropdown,
-.breakpoint-off .classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li:hover .dropdown,
-.breakpoint-off .classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li:hover .dropdown,
-.breakpoint-off .classynav ul li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li:hover .dropdown {
+.breakpoint-off .classynav ul li .sub-menu li:hover .sub-menu,
+.breakpoint-off .classynav ul li .sub-menu li .sub-menu li:hover .sub-menu,
+.breakpoint-off .classynav ul li .sub-menu li .sub-menu li .sub-menu li:hover .sub-menu,
+.breakpoint-off .classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li:hover .sub-menu,
+.breakpoint-off .classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li:hover .sub-menu,
+.breakpoint-off .classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li:hover .sub-menu,
+.breakpoint-off .classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li:hover .sub-menu,
+.breakpoint-off .classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li:hover .sub-menu,
+.breakpoint-off .classynav ul li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li .sub-menu li:hover .sub-menu {
   opacity: 1;
   visibility: visible;
   top: -10px;

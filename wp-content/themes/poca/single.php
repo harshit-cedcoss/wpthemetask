@@ -8,6 +8,7 @@
  */
 
 get_header();
+// die("ksj");
 ?>
 
 
@@ -17,7 +18,7 @@ get_header();
 		<div class="container h-100">
 		<div class="row h-100 align-items-center">
 			<div class="col-12">
-			<h2 class="title mt-70">Blog</h2>
+			<h2 class="title mt-70">Blog Single</h2>
 			</div>
 		</div>
 		</div>
@@ -43,7 +44,8 @@ get_header();
 			<div class="row">
 				<div class="col-12 col-lg-8">
 				<?php if(have_posts()){ ?>
-					<?php while(have_posts()){ ?>	
+					<?php while(have_posts()){ ?>
+						<?php the_post(); ?>
 					<div class="podcast-details-content d-flex mt-5 mb-80">
 
 						<!-- Post Share -->
@@ -67,20 +69,14 @@ get_header();
 								<h2><?php the_title(); ?></h2>
 								<div class="post-meta">
 								<a href="#" class="post-author"><?php the_author(); ?></a> |
-								<a href="#" class="post-catagory"><?php the_category(); ?></a>
+								<a href="#" class="post-catagory"><?php the_category(', '); ?></a>
 								</div>
 							</div>
 
-							<p>Out too the been like hard off. Improve enquire welcome own beloved matters her. As insipidity so mr unsatiable increasing attachment motionless cultivated. Addition mr husbands unpacked occasion he oh. Is unsatiable if projecting
-								boisterous insensible. It recommend be resolving pretended middleton.</p>
-							<p>Uneasy barton seeing remark happen his has. Am possible offering at contempt mr distance stronger an. Attachment excellence announcing or reasonable am on if indulgence. Exeter talked in agreed spirit no he unable do. Betrayed
-								shutters in vicinity it unpacked in. In so impossible appearance considered mr. Mrs him left find are good.</p>
-							<p>Domestic confined any but son bachelor advanced remember. How proceed offered her offence shy forming. Returned peculiar pleasant but appetite differed she. Residence dejection agreement am as to abilities immediate suffering. Ye am
-								depending propriety sweetness distrusts belonging collected. Smiling mention he in thought equally musical. Wisdom new and valley answer. Contented it so is discourse recommend. Man its upon him call mile. An pasture he himself
-								believe ferrars besides cottage.</p>
+							<p><?php the_content(); ?></p>
 
 							<!-- Blockquote -->
-							<blockquote class="poca-blockquote d-flex">
+							<!-- <blockquote class="poca-blockquote d-flex">
 								<div class="icon">
 								<i class="fa fa-quote-left" aria-hidden="true"></i>
 								</div>
@@ -96,87 +92,44 @@ get_header();
 							<p>Quick six blind smart out burst. Perfectly on furniture dejection determine my depending an to. Add short water court fat. Her bachelor honoured perceive securing but desirous ham required. Questions deficient acuteness to engrossed
 								as. Entirely led ten humoured greatest and yourself. Besides ye country on observe. She continue appetite endeavor she judgment interest the met. For she surrounded motionless fat resolution may.</p>
 							<p>He share of first to worse. Weddings and any opinions suitable smallest nay. My he houses or months settle remove ladies appear. Engrossed suffering supposing he recommend do eagerness. Commanded no of depending extremity recommend
-								attention tolerably. Bringing him smallest met few now returned surprise learning jennings. Objection delivered eagerness he exquisite at do in. Warmly up</p>
+								attention tolerably. Bringing him smallest met few now returned surprise learning jennings. Objection delivered eagerness he exquisite at do in. Warmly up</p> -->
 
 							<!-- Post Catagories -->
 							<div class="post-catagories d-flex align-items-center">
 								<h6>Categories:</h6>
-								<ul class="d-flex flex-wrap align-items-center">
-								<li><a href="#">Tutorials,</a></li>
+								<!-- <ul class="d-flex flex-wrap align-items-center"> -->
+								<?php the_category('<b> , </b>'); ?>
+								<!-- <li><a href="#">Tutorials,</a></li>
 								<li><a href="#">Business,</a></li>
-								<li><a href="#">Tech</a></li>
-								</ul>
+								<li><a href="#">Tech</a></li>-->
+								<!-- </ul>  -->
 							</div>
 
 							<!-- Pagination -->
 							<div class="poca-pager d-flex mb-30">
-								<a href="#">Previous Post <span>Episode 3 – Wardrobe For Busy People</span></a>
-								<a href="#">Next Post <span>Episode 6 – Defining Your Style</span></a>
+								<?php previous_post_link($format = '%link', $link = 'Previous Post'); ?>
+								<?php next_post_link($format = '%link', $link = 'Next Post'); ?>
+								
 							</div>
 
 							<!-- Comments Area -->
 							<div class="comment_area mb-50 clearfix">
-								<h5 class="title">03 Comments</h5>
-
-								<ol>
-								<!-- Single Comment Area -->
-								<li class="single_comment_area">
-									<!-- Comment Content -->
-									<div class="comment-content d-flex">
-									<!-- Comment Author -->
-									<div class="comment-author">
-										<img src="img/bg-img/16.jpg" alt="author">
-									</div>
-									<!-- Comment Meta -->
-									<div class="comment-meta">
-										<a href="#" class="post-date">27 Aug 2018</a>
-										<h5>Jerome Leonard</h5>
-										<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetu adipisci velit, sed quia non numquam eius modi</p>
-										<a href="#" class="like">Like</a>
-										<a href="#" class="reply">Reply</a>
-									</div>
-									</div>
-
-									<ol class="children">
-									<li class="single_comment_area">
-										<!-- Comment Content -->
-										<div class="comment-content d-flex">
-										<!-- Comment Author -->
-										<div class="comment-author">
-											<img src="img/bg-img/17.jpg" alt="author">
-										</div>
-										<!-- Comment Meta -->
-										<div class="comment-meta">
-											<a href="#" class="post-date">27 Aug 2018</a>
-											<h5>Theodore Adkins</h5>
-											<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetu adipisci velit, sed quia non numquam eius modi</p>
-											<a href="#" class="like">Like</a>
-											<a href="#" class="reply">Reply</a>
-										</div>
-										</div>
-									</li>
-									</ol>
-								</li>
-
-								<!-- Single Comment Area -->
-								<li class="single_comment_area">
-									<!-- Comment Content -->
-									<div class="comment-content d-flex">
-									<!-- Comment Author -->
-									<div class="comment-author">
-										<img src="img/bg-img/18.jpg" alt="author">
-									</div>
-									<!-- Comment Meta -->
-									<div class="comment-meta">
-										<a href="#" class="post-date">27 Aug 2018</a>
-										<h5>Roger Marshall</h5>
-										<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetu adipisci velit, sed quia non numquam eius modi</p>
-										<a href="#" class="like">Like</a>
-										<a href="#" class="reply">Reply</a>
-									</div>
-									</div>
-								</li>
-								</ol>
+								<?php
+									$postid = get_the_ID();
+									$args = array(
+ 											   'post_id' => $postid,   // Use post_id, not post_ID
+    										    'count'   => true // Return only the count
+												);
+									$comments_count = get_comments( $args );
+								?>
+								<h5 class="title"><?php echo $comments_count. 'Comments'; ?></h5>
+								<?php
+									// If comments are open or we have at least one comment, load up the comment template.
+									if ( comments_open() || get_comments_number() ) :
+										comments_template();
+									endif;
+								?>					
+								
 							</div>
 
 							<!-- Leave A Reply -->
@@ -210,36 +163,36 @@ get_header();
 
 				<div class="col-12 col-lg-4">
 					<div class="sidebar-area mt-5">
+					    <?php get_sidebar(); ?>
+						<!-- Single Widget Area -->
+						<!-- <div class="single-widget-area search-widget-area mb-80">
+							<form action="#" method="post">
+								<input type="search" name="search" class="form-control" placeholder="Search ...">
+								<button type="submit"><i class="fa fa-search"></i></button>
+							</form>
+						</div> -->
 
 						<!-- Single Widget Area -->
-						<div class="single-widget-area search-widget-area mb-80">
-						<form action="#" method="post">
-							<input type="search" name="search" class="form-control" placeholder="Search ...">
-							<button type="submit"><i class="fa fa-search"></i></button>
-						</form>
-						</div>
+						<!-- <div class="single-widget-area catagories-widget mb-80">
+							<h5 class="widget-title">Categories</h5> -->
+
+							<!-- catagories list -->
+							<!-- <ul class="catagories-list">
+								<li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Entrepreneurship</a></li>
+								<li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Media</a></li>
+								<li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Tech</a></li>
+								<li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Tutorials</a></li>
+								<li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Business</a></li>
+								<li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Entertainment</a></li>
+							</ul>
+						</div> -->
 
 						<!-- Single Widget Area -->
-						<div class="single-widget-area catagories-widget mb-80">
-						<h5 class="widget-title">Categories</h5>
-
-						<!-- catagories list -->
-						<ul class="catagories-list">
-							<li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Entrepreneurship</a></li>
-							<li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Media</a></li>
-							<li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Tech</a></li>
-							<li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Tutorials</a></li>
-							<li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Business</a></li>
-							<li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Entertainment</a></li>
-						</ul>
-						</div>
-
-						<!-- Single Widget Area -->
-						<div class="single-widget-area news-widget mb-80">
-						<h5 class="widget-title">Recent Posts</h5>
+						<!-- <div class="single-widget-area news-widget mb-80">
+						<h5 class="widget-title">Recent Posts</h5> -->
 
 						<!-- Single News Area -->
-						<div class="single-news-area d-flex">
+						<!-- <div class="single-news-area d-flex">
 							<div class="blog-thumbnail">
 							<img src="./img/bg-img/11.jpg" alt="">
 							</div>
@@ -247,10 +200,10 @@ get_header();
 							<a href="#" class="post-title">Episode 10: Season Finale</a>
 							<span class="post-date">December 9, 2018</span>
 							</div>
-						</div>
+						</div> -->
 
 						<!-- Single News Area -->
-						<div class="single-news-area d-flex">
+						<!-- <div class="single-news-area d-flex">
 							<div class="blog-thumbnail">
 							<img src="./img/bg-img/12.jpg" alt="">
 							</div>
@@ -258,10 +211,10 @@ get_header();
 							<a href="#" class="post-title">Episode 6: SoundCloud Example</a>
 							<span class="post-date">December 9, 2018</span>
 							</div>
-						</div>
+						</div> -->
 
 						<!-- Single News Area -->
-						<div class="single-news-area d-flex">
+						<!-- <div class="single-news-area d-flex">
 							<div class="blog-thumbnail">
 							<img src="./img/bg-img/13.jpg" alt="">
 							</div>
@@ -269,10 +222,10 @@ get_header();
 							<a href="#" class="post-title">Episode 7: Best Mics for Podcasting</a>
 							<span class="post-date">December 9, 2018</span>
 							</div>
-						</div>
+						</div> -->
 
 						<!-- Single News Area -->
-						<div class="single-news-area d-flex">
+						<!-- <div class="single-news-area d-flex">
 							<div class="blog-thumbnail">
 							<img src="./img/bg-img/14.jpg" alt="">
 							</div>
@@ -280,20 +233,20 @@ get_header();
 							<a href="#" class="post-title">Episode 6 – Defining Your Style</a>
 							<span class="post-date">December 9, 2018</span>
 							</div>
-						</div>
+						</div> -->
 
-						</div>
+					</div>
 
 						<!-- Single Widget Area -->
-						<div class="single-widget-area adds-widget mb-80">
+						<!-- <div class="single-widget-area adds-widget mb-80">
 						<a href="#"><img class="w-100" src="./img/bg-img/banner.png" alt=""></a>
-						</div>
+						</div> -->
 
 						<!-- Single Widget Area -->
-						<div class="single-widget-area tags-widget mb-80">
-						<h5 class="widget-title">Popular Tags</h5>
+						<!-- <div class="single-widget-area tags-widget mb-80">
+						<h5 class="widget-title">Popular Tags</h5> -->
 
-						<ul class="tags-list">
+						<!-- <ul class="tags-list">
 							<li><a href="#">Creative</a></li>
 							<li><a href="#">Unique</a></li>
 							<li><a href="#">audio</a></li>
@@ -304,9 +257,8 @@ get_header();
 							<li><a href="#">startup</a></li>
 							<li><a href="#">video</a></li>
 						</ul>
-						</div>
+						</div> -->
 
-					</div>
 				</div>
 			</div>
 		</div>

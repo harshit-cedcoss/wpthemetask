@@ -165,6 +165,8 @@ function poca_scripts() {
 	wp_enqueue_script( 'avoid-console-error', get_template_directory_uri() . '/js/default-assets/avoid.console.error.js', array(), '', true );
 	wp_enqueue_script( 'classynav', get_template_directory_uri() . '/js/default-assets/classynav.js', array(), '', true );
 	wp_enqueue_script( 'jquery-scrollup-min', get_template_directory_uri() . '/js/default-assets/jquery.scrollup.min.js', array(), '', true );
+	wp_enqueue_script( 'myjquery', get_template_directory_uri() . '/js/myjquery.js', array(), '', true );
+
 
 	wp_enqueue_style( 'animate', get_template_directory_uri() . '/css/animate.css', array(), '' );
 	wp_enqueue_style( 'bootstrap-min', get_template_directory_uri() . '/css/bootstrap.min.css', array(), '' );
@@ -210,3 +212,25 @@ require get_template_directory() . '/inc/customizer.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+
+/**
+ * Filter the CSS class for a nav menu based on a condition.
+ *
+ * @param array  $classes The CSS classes that are applied to the menu item's <li> element.
+ * @param object $item    The current menu item.
+ * @return array (maybe) modified nav menu class.
+ */
+function wpdocs_special_nav_class( $classes, $item ) {
+	if ( 'category' == $item->object ) {
+		$classes[] = "cn-dropdown-item has-down";
+		//var_dump( $item );
+	}
+	
+    return $classes;
+}
+add_filter( 'nav_menu_css_class' , 'wpdocs_special_nav_class' , 10, 2 );
+
+require get_stylesheet_directory().'/inc/class-my-poca-categories.php';
+//new My_Poca_Categories();
+
+require get_stylesheet_directory().'/inc/class-my-poca-recent-posts.php';
