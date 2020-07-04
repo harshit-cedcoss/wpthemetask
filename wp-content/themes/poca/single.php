@@ -75,41 +75,17 @@ get_header();
 
 							<p><?php the_content(); ?></p>
 
-							<!-- Blockquote -->
-							<!-- <blockquote class="poca-blockquote d-flex">
-								<div class="icon">
-								<i class="fa fa-quote-left" aria-hidden="true"></i>
-								</div>
-								<div class="text">
-								<h5>That’s not to say you’ll have the exact same thing if you stop by: the restaurant’s menus change constantly, based on seasonal ingredients.</h5>
-								<h6>Jacob Austin</h6>
-								</div>
-							</blockquote>
-
-							<h2>This is definitely my favorite podcast</h2>
-							<p>Delightful unreserved impossible few estimating men favourable see entreaties. She propriety immediate was improving. He or entrance humoured likewise moderate. Much nor game son say feel. Fat make met can must form into gate. Me we
-								offending prevailed discovery.</p>
-							<p>Quick six blind smart out burst. Perfectly on furniture dejection determine my depending an to. Add short water court fat. Her bachelor honoured perceive securing but desirous ham required. Questions deficient acuteness to engrossed
-								as. Entirely led ten humoured greatest and yourself. Besides ye country on observe. She continue appetite endeavor she judgment interest the met. For she surrounded motionless fat resolution may.</p>
-							<p>He share of first to worse. Weddings and any opinions suitable smallest nay. My he houses or months settle remove ladies appear. Engrossed suffering supposing he recommend do eagerness. Commanded no of depending extremity recommend
-								attention tolerably. Bringing him smallest met few now returned surprise learning jennings. Objection delivered eagerness he exquisite at do in. Warmly up</p> -->
-
 							<!-- Post Catagories -->
 							<div class="post-catagories d-flex align-items-center">
 								<h6>Categories:</h6>
-								<!-- <ul class="d-flex flex-wrap align-items-center"> -->
 								<?php the_category('<b> , </b>'); ?>
-								<!-- <li><a href="#">Tutorials,</a></li>
-								<li><a href="#">Business,</a></li>
-								<li><a href="#">Tech</a></li>-->
-								<!-- </ul>  -->
+								>
 							</div>
 
 							<!-- Pagination -->
 							<div class="poca-pager d-flex mb-30">
 								<?php previous_post_link($format = '%link', $link = 'Previous Post'); ?>
 								<?php next_post_link($format = '%link', $link = 'Next Post'); ?>
-								
 							</div>
 
 							<!-- Comments Area -->
@@ -128,32 +104,30 @@ get_header();
 									if ( comments_open() || get_comments_number() ) :
 										comments_template();
 									endif;
-								?>					
-								
+								?>								
 							</div>
-
-							<!-- Leave A Reply -->
 							<div class="contact-form">
-								<h5 class="mb-30">Leave A Comment</h5>
-
-								<!-- Form -->
-								<form action="#" method="post">
-								<div class="row">
-									<div class="col-lg-6">
-									<input type="text" name="message-name" class="form-control mb-30" placeholder="Name">
-									</div>
-									<div class="col-lg-6">
-									<input type="email" name="message-email" class="form-control mb-30" placeholder="Email">
-									</div>
-									<div class="col-12">
-									<textarea name="message" class="form-control mb-30" placeholder="Comment"></textarea>
-									</div>
-									<div class="col-12">
-									<button type="submit" class="btn poca-btn mt-30">Post Comment</button>
-									</div>
-								</div>
-								</form>
-
+								<?php
+								$comment_author = 'Name';
+								$comment_email = 'Email';
+								$comment_body = 'Comments';
+								$fields = array(
+									//Author field
+									'author' => '<div class="col-lg-6"><input class="form-control mb-30" id="author" name="author" aria-required="true" placeholder="' . $comment_author .'"></input></div>',
+									//Email Field
+									'email' => '<div class="col-lg-6"><input class="form-control mb-30" id="email" name="email" placeholder="' . $comment_email .'"></input></div>',
+									//'cookies' => '',
+								);
+								$args = array(
+									'class_submit' => 'btn poca-btn mt-30',
+									'label_submit' => __( 'Post Comment' ),
+									
+									'comment_field' => '<div class="col-12"><textarea id="comment" name="comment" class="form-control mb-30" aria-required="true" placeholder="' . $comment_body .'"></textarea></div>',
+									'title_reply' => '<h5 class="mb-30">Leave A Comment</h5>',
+									'fields'       => apply_filters( 'comment_form_default_fields', $fields ),
+								);
+								comment_form( $args );
+								?>
 							</div>
 						</div>
 					</div>
@@ -163,102 +137,10 @@ get_header();
 
 				<div class="col-12 col-lg-4">
 					<div class="sidebar-area mt-5">
-					    <?php get_sidebar(); ?>
-						<!-- Single Widget Area -->
-						<!-- <div class="single-widget-area search-widget-area mb-80">
-							<form action="#" method="post">
-								<input type="search" name="search" class="form-control" placeholder="Search ...">
-								<button type="submit"><i class="fa fa-search"></i></button>
-							</form>
-						</div> -->
 
-						<!-- Single Widget Area -->
-						<!-- <div class="single-widget-area catagories-widget mb-80">
-							<h5 class="widget-title">Categories</h5> -->
-
-							<!-- catagories list -->
-							<!-- <ul class="catagories-list">
-								<li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Entrepreneurship</a></li>
-								<li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Media</a></li>
-								<li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Tech</a></li>
-								<li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Tutorials</a></li>
-								<li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Business</a></li>
-								<li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Entertainment</a></li>
-							</ul>
-						</div> -->
-
-						<!-- Single Widget Area -->
-						<!-- <div class="single-widget-area news-widget mb-80">
-						<h5 class="widget-title">Recent Posts</h5> -->
-
-						<!-- Single News Area -->
-						<!-- <div class="single-news-area d-flex">
-							<div class="blog-thumbnail">
-							<img src="./img/bg-img/11.jpg" alt="">
-							</div>
-							<div class="blog-content">
-							<a href="#" class="post-title">Episode 10: Season Finale</a>
-							<span class="post-date">December 9, 2018</span>
-							</div>
-						</div> -->
-
-						<!-- Single News Area -->
-						<!-- <div class="single-news-area d-flex">
-							<div class="blog-thumbnail">
-							<img src="./img/bg-img/12.jpg" alt="">
-							</div>
-							<div class="blog-content">
-							<a href="#" class="post-title">Episode 6: SoundCloud Example</a>
-							<span class="post-date">December 9, 2018</span>
-							</div>
-						</div> -->
-
-						<!-- Single News Area -->
-						<!-- <div class="single-news-area d-flex">
-							<div class="blog-thumbnail">
-							<img src="./img/bg-img/13.jpg" alt="">
-							</div>
-							<div class="blog-content">
-							<a href="#" class="post-title">Episode 7: Best Mics for Podcasting</a>
-							<span class="post-date">December 9, 2018</span>
-							</div>
-						</div> -->
-
-						<!-- Single News Area -->
-						<!-- <div class="single-news-area d-flex">
-							<div class="blog-thumbnail">
-							<img src="./img/bg-img/14.jpg" alt="">
-							</div>
-							<div class="blog-content">
-							<a href="#" class="post-title">Episode 6 – Defining Your Style</a>
-							<span class="post-date">December 9, 2018</span>
-							</div>
-						</div> -->
-
+						<?php get_sidebar(); ?>
+						
 					</div>
-
-						<!-- Single Widget Area -->
-						<!-- <div class="single-widget-area adds-widget mb-80">
-						<a href="#"><img class="w-100" src="./img/bg-img/banner.png" alt=""></a>
-						</div> -->
-
-						<!-- Single Widget Area -->
-						<!-- <div class="single-widget-area tags-widget mb-80">
-						<h5 class="widget-title">Popular Tags</h5> -->
-
-						<!-- <ul class="tags-list">
-							<li><a href="#">Creative</a></li>
-							<li><a href="#">Unique</a></li>
-							<li><a href="#">audio</a></li>
-							<li><a href="#">Episodes</a></li>
-							<li><a href="#">ideas</a></li>
-							<li><a href="#">Podcasts</a></li>
-							<li><a href="#">Wordpress Template</a></li>
-							<li><a href="#">startup</a></li>
-							<li><a href="#">video</a></li>
-						</ul>
-						</div> -->
-
 				</div>
 			</div>
 		</div>

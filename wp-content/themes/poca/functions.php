@@ -229,8 +229,70 @@ function wpdocs_special_nav_class( $classes, $item ) {
     return $classes;
 }
 add_filter( 'nav_menu_css_class' , 'wpdocs_special_nav_class' , 10, 2 );
-
+/**
+ * Custom Categories Widget for poca theme
+ */
 require get_stylesheet_directory().'/inc/class-my-poca-categories.php';
 //new My_Poca_Categories();
 
+/**
+ * Custom Recent-Posts Widget for poca theme
+ */
 require get_stylesheet_directory().'/inc/class-my-poca-recent-posts.php';
+
+
+function comment_section( $comment, $args, $depth ){ ?>
+
+	<!-- Comments Area -->
+    <!-- Single Comment Area -->
+    <li class="single_comment_area">
+    <!-- Comment Content -->
+        <div class="comment-content d-flex">
+            <!-- Comment Author -->
+            <div class="comment-author">
+               <?php  echo get_avatar( $comment );  ?>
+            </div>
+            <!-- Comment Meta -->
+            <div class="comment-meta">
+                <a href="#" class="post-date"><?php echo get_comment_date(); ?></a>
+    	        <h5><?php echo get_comment_author_link(); ?></h5>
+                <p><?php comment_text(); ?></p>
+                <a href="#" class="like">Like</a>
+                <?php comment_reply_link(
+					array_merge(
+						$args,
+						array(
+						   'reply_text' => __('Reply', 'poca'),
+						   'depth'      => $depth,
+						)
+					)	
+				); ?>
+          	</div>
+        </div>
+	<?php
+       // comment_reply_link();
+   	 ?>
+    </li>
+<?php			  
+}
+
+
+add_filter( 'comment_form_fields', 'move_comment_field' );
+function move_comment_field( $fields ) {
+    $comment_field = $fields['comment'];
+    unset( $fields['comment'] );
+	$fields['comment'] = $comment_field;
+	$cookie__field = $fields['cookies'];
+    unset( $fields['cookies'] );
+    $fields['cookies'] = $cookie__field;
+    return $fields;
+}
+
+add_action( 'comment_form_top', function(){
+	// Adjust this to your needs:
+	echo '<div class="row">'; 
+});
+add_action( 'comment_form', function(){
+	// Adjust this to your needs:
+	echo '</div>'; 
+});
