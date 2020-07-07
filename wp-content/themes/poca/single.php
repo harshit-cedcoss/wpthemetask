@@ -10,34 +10,34 @@
 get_header();
 // die("ksj");
 ?>
-
+  <!-- ***** Breadcrumb Area Start ***** -->
+  <div class="breadcumb-area bg-img bg-overlay" style="background-image: url(<?php echo get_template_directory_uri() . '/img/bg-img/2.jpg'?>);">
+    <div class="container h-100">
+      <div class="row h-100 align-items-center">
+        <div class="col-12">
+          <h2 class="title mt-70"><?php the_title(); ?></h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="breadcumb--con">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><?php the_title(); ?></li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Breadcrumb Area End ***** -->
 
 <main id="primary" class="site-main">
-	<!-- ***** Breadcrumb Area Start ***** -->
-	<div class="breadcumb-area bg-img bg-overlay" style="background-image: url(<?php echo get_template_directory_uri(); ?>/img/bg-img/2.jpg);">
-		<div class="container h-100">
-		<div class="row h-100 align-items-center">
-			<div class="col-12">
-			<h2 class="title mt-70">Blog Single</h2>
-			</div>
-		</div>
-		</div>
-	</div>
-	<div class="breadcumb--con">
-		<div class="container">
-		<div class="row">
-			<div class="col-12">
-			<nav aria-label="breadcrumb">
-				<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
-				<li class="breadcrumb-item active" aria-current="page">Blog</li>
-				</ol>
-			</nav>
-			</div>
-		</div>
-		</div>
-	</div>
-  	<!-- ***** Breadcrumb Area End ***** -->
+
 	<!-- ***** Blog Details Area Start ***** -->
 	<section class="blog-details-area">
 		<div class="container">
@@ -84,21 +84,38 @@ get_header();
 
 							<!-- Pagination -->
 							<div class="poca-pager d-flex mb-30">
-								<?php previous_post_link($format = '%link', $link = 'Previous Post'); ?>
-								<?php next_post_link($format = '%link', $link = 'Next Post'); ?>
+								<?php previous_post_link($format = '%link', $link = 'Previous Post<br><h5>%title</h5>'); ?>
+								<?php next_post_link($format = '%link', $link = 'Next Post<br><h5>%title</h5>'); ?>
 							</div>
 
 							<!-- Comments Area -->
 							<div class="comment_area mb-50 clearfix">
+								<h5 class="title">
 								<?php
-									$postid = get_the_ID();
-									$args = array(
- 											   'post_id' => $postid,   // Use post_id, not post_ID
-    										    'count'   => true // Return only the count
-												);
-									$comments_count = get_comments( $args );
+									// $postid = get_the_ID();
+									// $args = array(
+ 									// 		   'post_id' => $postid,   // Use post_id, not post_ID
+    								// 		    'count'   => true // Return only the count
+									// 			);
+									// $comments_count = get_comments( $args );
+
+									$poca_comment_count = get_comments_number();
+									if ( '1' === $poca_comment_count ) {
+										printf(
+											/* translators: 1: comment count number. */
+											esc_html__( '%1$s Comment', 'poca' ),
+											$poca_comment_count
+										);
+									} else {
+										printf( 
+											/* translators: 1: comment count number. */
+											esc_html( _nx( '%1$s Comment', '%1$s Comments', $poca_comment_count, 'poca' ) ),
+											$poca_comment_count
+											
+										);
+									}
 								?>
-								<h5 class="title"><?php echo $comments_count. 'Comments'; ?></h5>
+								<?php // echo $comments_count. ' Comments'; ?></h5>
 								<?php
 									// If comments are open or we have at least one comment, load up the comment template.
 									if ( comments_open() || get_comments_number() ) :
@@ -137,40 +154,13 @@ get_header();
 
 				<div class="col-12 col-lg-4">
 					<div class="sidebar-area mt-5">
-
-						<?php get_sidebar(); ?>
-						
+					    <?php get_sidebar(); ?>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
 	<!-- ***** Blog Details Area End ***** -->
-
-    <!-- ***** Newsletter Area Start ***** -->
-	<section class="poca-newsletter-area bg-img bg-overlay pt-50 jarallax" style="background-image: url(<?php echo get_template_directory_uri(); ?>/img/bg-img/15.jpg);">
-		<div class="container">
-		<div class="row align-items-center">
-			<!-- Newsletter Content -->
-			<div class="col-12 col-lg-6">
-			<div class="newsletter-content mb-50">
-				<h2>Sign Up To Newsletter</h2>
-				<h6>Subscribe to receive info on our latest news and episodes</h6>
-			</div>
-			</div>
-			<!-- Newsletter Form -->
-			<div class="col-12 col-lg-6">
-			<div class="newsletter-form mb-50">
-				<form action="#" method="post">
-				<input type="email" name="nl-email" class="form-control" placeholder="Your Email">
-				<button type="submit" class="btn">Subscribe</button>
-				</form>
-			</div>
-			</div>
-		</div>
-		</div>
-  	</section>
-  	<!-- ***** Newsletter Area End ***** -->
 		
 </main><!-- #main -->
 <!-- ***** Footer Area Start ***** -->

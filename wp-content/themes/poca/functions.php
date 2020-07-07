@@ -221,11 +221,12 @@ if ( defined( 'JETPACK__VERSION' ) ) {
  * @return array (maybe) modified nav menu class.
  */
 function wpdocs_special_nav_class( $classes, $item ) {
-	if ( 'category' == $item->object ) {
+	// if ( 'category' == $item->object || in_array('menu-item-has-children', $item->classes )) { 
+	if ( in_array('menu-item-has-children', $classes ) ){
 		$classes[] = "cn-dropdown-item has-down";
 		//var_dump( $item );
 	}
-	
+
     return $classes;
 }
 add_filter( 'nav_menu_css_class' , 'wpdocs_special_nav_class' , 10, 2 );
@@ -296,3 +297,16 @@ add_action( 'comment_form', function(){
 	// Adjust this to your needs:
 	echo '</div>'; 
 });
+
+/**
+ * Altering the main query for custom post type.
+ *
+ * @param [array] $query array for the arguments passed in field.
+ */
+function wporg_add_custom_post_types( $query ) {
+	if ( is_page('podcasts') && $query->is_main_query() ) {
+		$query->set( 'post_type', array( 'poca_podcast' ) );
+	}
+	return $query;
+}
+//add_action( 'pre_get_posts', 'wporg_add_custom_post_types' );
