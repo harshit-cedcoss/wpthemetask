@@ -43,8 +43,9 @@ class My_Poca_Recent_Posts extends WP_Widget {
 	public function widget( $args, $instance ) {
 		if ( ! isset( $args['widget_id'] ) ) {
 			$args['widget_id'] = $this->id;
-        }
-        
+		}
+		$post_type = get_post_type( get_the_ID() );
+		//echo $post_type;
 		$title = ( ! empty( $instance['title'] ) ) ? $instance['title'] : __( 'Recent Posts' );
 
 		/** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
@@ -75,6 +76,7 @@ class My_Poca_Recent_Posts extends WP_Widget {
 					'no_found_rows'       => true,
 					'post_status'         => 'publish',
 					'ignore_sticky_posts' => true,
+					'post_type'           => $post_type,    //Show Recent Posts of the respective 'Post' Type
 				),
 				$instance
 			)
@@ -92,7 +94,7 @@ class My_Poca_Recent_Posts extends WP_Widget {
 			echo $args['before_title'] . $title . $args['after_title'];
 		}
 		?>
-        <div class="single-widget-area news-widget mb-80">
+		<div class="single-widget-area news-widget mb-80">
 			<?php foreach ( $r->posts as $recent_post ) : ?>
 				<?php
 				$post_title   = get_the_title( $recent_post->ID );
@@ -103,19 +105,19 @@ class My_Poca_Recent_Posts extends WP_Widget {
 					$aria_current = ' aria-current="page"';
 				}
 				?>
-                <div class="single-news-area d-flex">
-                    <div class="blog-thumbnail">
-                        <!-- <img src="<?php// the_post_thumbnail(); ?>" alt=""> -->
-                        <?php echo get_the_post_thumbnail( $recent_post->ID ); ?>
-                    </div>
-                    <div class="blog-content">
-                        <a href="<?php the_permalink( $recent_post->ID ); ?>" <?php echo $aria_current; ?> class="post-title"><?php echo $title; ?></a>
-                        <span class="post-date"><?php echo get_the_date( '', $recent_post->ID ); ?></span>
-                    </div>
-                </div>
+				<div class="single-news-area d-flex">
+					<div class="blog-thumbnail">
+						<!-- <img src="<?php// the_post_thumbnail(); ?>" alt=""> -->
+						<?php echo get_the_post_thumbnail( $recent_post->ID ); ?>
+					</div>
+					<div class="blog-content">
+						<a href="<?php the_permalink( $recent_post->ID ); ?>" <?php echo $aria_current; ?> class="post-title"><?php echo $title; ?></a>
+						<span class="post-date"><?php echo get_the_date( '', $recent_post->ID ); ?></span>
+					</div>
+				</div>
 
 			<?php endforeach; ?>
-        </div>   
+		</div>   
 		<?php
 		echo $args['after_widget'];
 	}
@@ -159,6 +161,22 @@ class My_Poca_Recent_Posts extends WP_Widget {
 		<p><input class="checkbox" type="checkbox"<?php checked( $show_date ); ?> id="<?php echo $this->get_field_id( 'show_date' ); ?>" name="<?php echo $this->get_field_name( 'show_date' ); ?>" />
 		<label for="<?php echo $this->get_field_id( 'show_date' ); ?>"><?php _e( 'Display post date?' ); ?></label></p>
 		<?php
+	//	print_r($instance);
+	}
+	 /**
+	 * Retrieves the taxonomy for the current Recent Post widget instance.
+	 *
+	 * @since 4.4.0
+	 *
+	 * @param array $instance Current settings.
+	 * @return string Name of the current taxonomy if set, otherwise 'post_tag'.
+	 */
+	public function _get_current_taxonomy( $instance ) {
+		if ( ! empty( $instance['taxonomy'] ) && taxonomy_exists( $instance['taxonomy'] ) ) {
+			return $instance['taxonomy'];
+		}
+
+		return 'categories';
 	}
 }
 add_action(

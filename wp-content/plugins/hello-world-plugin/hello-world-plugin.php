@@ -430,7 +430,6 @@ function wporg_custom_post_type() {
 			register_post_type( 'wporg_product', $args );
 }
 add_action( 'init', 'wporg_custom_post_type' );
-
 register_activation_hook( __FILE__, 'my_rewrite_flush' );
 /**
  * Flushing the rewrite rules.

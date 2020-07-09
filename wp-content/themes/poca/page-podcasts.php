@@ -89,11 +89,20 @@ get_header();
     <div class="container">
       <div class="poca-projects-menu mb-30 wow fadeInUp" data-wow-delay="0.3s">
         <div class="text-center portfolio-menu">
-          <button class="btn active" data-filter="*">All</button>
+          <!-- <button class="btn active" data-filter="*">All</button>
           <button class="btn" data-filter=".entre">Entrepreneurship</button>
           <button class="btn" data-filter=".media">Media</button>
           <button class="btn" data-filter=".tech">Tech</button>
-          <button class="btn" data-filter=".tutor">Tutorials</button>
+          <button class="btn" data-filter=".tutor">Tutorials</button> -->
+          <button class="btn active" data-filter="*">All</button>
+          <?php 
+          $terms = get_terms( $taxonomy = 'poca_podcast_category' );
+          if ($terms) {
+              foreach ($terms as $term) {
+                echo '<button class="btn" data-filter="' . $term->name . '">' . $term->name . '</button>';
+              }
+          }
+          ?>
         </div>
       </div>
     </div>

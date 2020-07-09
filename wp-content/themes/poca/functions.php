@@ -233,13 +233,13 @@ add_filter( 'nav_menu_css_class' , 'wpdocs_special_nav_class' , 10, 2 );
 /**
  * Custom Categories Widget for poca theme
  */
-require get_stylesheet_directory().'/inc/class-my-poca-categories.php';
+//require get_stylesheet_directory().'/inc/class-my-poca-categories.php';
 //new My_Poca_Categories();
 
 /**
  * Custom Recent-Posts Widget for poca theme
  */
-require get_stylesheet_directory().'/inc/class-my-poca-recent-posts.php';
+//require get_stylesheet_directory().'/inc/class-my-poca-recent-posts.php';
 
 
 function comment_section( $comment, $args, $depth ){ ?>
@@ -277,7 +277,6 @@ function comment_section( $comment, $args, $depth ){ ?>
 <?php			  
 }
 
-
 add_filter( 'comment_form_fields', 'move_comment_field' );
 function move_comment_field( $fields ) {
     $comment_field = $fields['comment'];
@@ -303,10 +302,10 @@ add_action( 'comment_form', function(){
  *
  * @param [array] $query array for the arguments passed in field.
  */
-function wporg_add_custom_post_types( $query ) {
+function poca_add_custom_post_types( $query ) {
 	if ( is_page('podcasts') && $query->is_main_query() ) {
 		$query->set( 'post_type', array( 'poca_podcast' ) );
 	}
 	return $query;
 }
-//add_action( 'pre_get_posts', 'wporg_add_custom_post_types' );
+//add_action( 'pre_get_posts', 'poca_add_custom_post_types' );

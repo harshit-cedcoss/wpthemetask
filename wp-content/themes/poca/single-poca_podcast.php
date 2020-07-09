@@ -97,7 +97,7 @@ get_header();
               <!-- Pagination -->
               <div class="poca-pager d-flex mb-30">
                 <?php previous_post_link($format = '%link', $link = 'Previous Post<br><h5>%title</h5>'); ?>
-				<?php next_post_link($format = '%link', $link = 'Next Post<br><h5>%title</h5>'); ?>
+			        	<?php next_post_link($format = '%link', $link = 'Next Post<br><h5>%title</h5>'); ?>
               </div>
 
               <!-- Comments Area -->
@@ -129,7 +129,7 @@ get_header();
 				</div>
 	    		<div class="contact-form">
 				<?php
-		    		$comment_author = 'Name';
+		    	$comment_author = 'Name';
 					$comment_email = 'Email';
 					$comment_body = 'Comments';
 					$fields = array(
@@ -159,7 +159,7 @@ get_header();
           <div class="sidebar-area mt-5">
 
             <!-- Widget Area -->
-            <?php get_sidebar(); ?>
+            <?php get_sidebar('sidebar-2'); ?>
 
           </div>
         </div>

@@ -75,6 +75,27 @@ function deactivate() {
 // deactivation.
 register_deactivation_hook( __FILE__, 'deactivate' );
 
+define( 'PLUGIN_DIR', dirname( __FILE__ ) . '/' );
+
+/**
+ * Register widget area.
+ *
+ * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
+ */
+function poca_widgets_podcast_sidebar_init() {
+	register_sidebar(
+		array(
+			'name'          => esc_html__( 'Podcast Sidebar', 'poca' ),
+			'id'            => 'sidebar-2',
+			'description'   => esc_html__( 'Add widgets here.', 'poca' ),
+			'before_widget' => '<section id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>',
+		)
+	);
+}
+add_action( 'widgets_init', 'poca_widgets_podcast_sidebar_init' );
 
 /**
  * Custom-Post
@@ -116,9 +137,9 @@ function poca_custom_post_type() {
 		'show_in_admin_bar'  => true,
 		'capability_type'    => 'post',
 		'hierarchical'       => false,
-		'show_in_rest'       => false,
+		'show_in_rest'       => true,
 		'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' ),
-		'taxonomies'         => array( 'category', 'post_tag' ),
+		'taxonomies'         => array( 'poca_podcast_category', 'poca_podcast_tag' ),
 	//	'menu_icon'          => 'book',
 		'map_meta_cap'       => true,
 		'query-var'          => true,
@@ -145,3 +166,83 @@ function my_rewrite_flush() {
 	// You should *NEVER EVER* do this on every page load!!
 	flush_rewrite_rules();
 }
+/**
+ * Our Custom Taxonomy.
+ *
+ * @return void
+ */
+function poca_podcast_register_taxonomy_category() {
+	$labels = array(
+		'name'              => _x( 'Poca Podcast Categories', 'taxonomy general name' ),
+		'singular_name'     => _x( 'Poca Podcast Category', 'taxonomy singular name' ),
+		'search_items'      => __( 'Search category' ),
+		'all_items'         => __( 'All Categories' ),
+		'parent_item'       => __( 'Parent Category' ),
+		'parent_item_colon' => __( 'Parent Category:' ),
+		'edit_item'         => __( 'Edit Category' ),
+		'view_item'         => __( 'View Category' ),
+		'update_item'       => __( 'Update Category' ),
+		'add_new_item'      => __( 'Add New Category' ),
+		'new_item_name'     => __( 'New Category Name' ),
+		'menu_name'         => __( 'Poca Podcast Categories' ),
+	);
+	$args   = array(
+		'hierarchical'      => true, // make it hierarchical (like categories).
+		'labels'            => $labels,
+		'description'       => 'this is the custom taxonomy description',
+		'show_ui'           => true,
+		'show_admin_column' => true,
+		'query_var'         => true,
+		'show_in_rest'      => true,
+		'rewrite'           => array( 'slug' => 'poca_podcast_category' ),
+	);
+	register_taxonomy( 'poca_podcast_category', array( 'poca_podcast' ), $args );
+}
+add_action( 'init', 'poca_podcast_register_taxonomy_category' );
+
+/**
+ * Our Custom Taxonomy.
+ *
+ * @return void
+ */
+function poca_podcast_register_taxonomy_tags() {
+	$labels = array(
+		'name'              => _x( 'Poca Podcast Tags', 'taxonomy general name' ),
+		'singular_name'     => _x( 'Poca Podcast Tag', 'taxonomy singular name' ),
+		'search_items'      => __( 'Search tag' ),
+		'all_items'         => __( 'All Tags' ),
+		'parent_item'       => __( 'Parent Tag' ),
+		'parent_item_colon' => __( 'Parent Tag:' ),
+		'edit_item'         => __( 'Edit Tag' ),
+		'view_item'         => __( 'View Tag' ),
+		'update_item'       => __( 'Update Tag' ),
+		'add_new_item'      => __( 'Add New Tag' ),
+		'new_item_name'     => __( 'New Tag Name' ),
+		'menu_name'         => __( 'Poca Podcast Tags' ),
+	);
+	$args   = array(
+		'hierarchical'      => true, // make it hierarchical (like categories).
+		'labels'            => $labels,
+		'description'       => 'this is the custom taxonomy description',
+		'show_ui'           => true,
+		'show_admin_column' => true,
+		'query_var'         => true,
+		'show_in_rest'      => true,
+		'rewrite'           => array( 'slug' => 'poca_podcast_tag' ),
+	);
+	register_taxonomy( 'poca_podcast_tag', array( 'poca_podcast' ), $args );
+}
+add_action( 'init', 'poca_podcast_register_taxonomy_tags' );
+
+
+/**
+ * Custom Categories Widget for poca theme
+ */
+require PLUGIN_DIR . '/includes/class-my-poca-categories.php';
+
+
+/**
+ * Custom Recent-Posts Widget for poca theme
+ */
+require PLUGIN_DIR . '/includes/class-my-poca-recent-posts.php';
+
