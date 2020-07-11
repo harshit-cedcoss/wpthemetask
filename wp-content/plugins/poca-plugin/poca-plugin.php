@@ -88,6 +88,17 @@ function poca_widgets_podcast_sidebar_init() {
 			'name'          => esc_html__( 'Podcast Sidebar', 'poca' ),
 			'id'            => 'sidebar-2',
 			'description'   => esc_html__( 'Add widgets here.', 'poca' ),
+			'before_widget' => '<section id="%1$s" class="widget %2$s"><div class="single-widget-area search-widget-area mb-80">',
+			'after_widget'  => '</div></section>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>',
+		)
+	);
+	register_sidebar(
+		array(
+			'name'          => esc_html__( 'Top Level Sidebar', 'poca' ),
+			'id'            => 'sidebar-3',
+			'description'   => esc_html__( 'Add widgets here.', 'poca' ),
 			'before_widget' => '<section id="%1$s" class="widget %2$s">',
 			'after_widget'  => '</section>',
 			'before_title'  => '<h2 class="widget-title">',
@@ -96,6 +107,7 @@ function poca_widgets_podcast_sidebar_init() {
 	);
 }
 add_action( 'widgets_init', 'poca_widgets_podcast_sidebar_init' );
+
 
 /**
  * Custom-Post
@@ -246,3 +258,130 @@ require PLUGIN_DIR . '/includes/class-my-poca-categories.php';
  */
 require PLUGIN_DIR . '/includes/class-my-poca-recent-posts.php';
 
+
+/**
+ * Enqueuing js file and creating a global object
+ *
+ * @return void
+ */
+function podcast_ajax_enqueue() {
+
+	// Enqueue javascript on the frontend.
+	wp_enqueue_script(
+		'podcast-ajax-script',
+		plugins_url( '/js/myjquery_podcast.js', __FILE__ ),
+		array( 'jquery' ),
+		'1.0.0',
+		true
+	);
+
+	// The wp_localize_script allows us to output the ajax_url path for our script to use.
+	wp_localize_script(
+		'podcast-ajax-script',
+		'podcast_ajax_obj',
+		array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			'nonce'   => wp_create_nonce( 'ajax-nonce' ),
+		)
+	);
+}
+add_action( 'wp_enqueue_scripts', 'podcast_ajax_enqueue' );
+
+
+/**
+ * Podcast ajax handler.
+ */
+function podcast_ajax_request() {
+
+	$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+
+	if ( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) ) {
+		die( 'Nonce value cannot be verified.' );
+	}
+
+	// The $_REQUEST contains all the data sent via ajax.
+	if ( isset( $_POST ) ) {
+		$current_tax     = isset( $_POST['tax'] ) ? sanitize_text_field( wp_unslash( $_POST['tax'] ) ) : '';
+		$number_of_posts = isset( $_POST['num_of_posts'] ) ? sanitize_text_field( wp_unslash( $_POST['num_of_posts'] ) ) : '';
+
+		// echo $current_tax;
+		// Create post object.
+		if ( '*' === $current_tax ) {
+			$args = array(
+				'numberposts' => $number_of_posts, // -1 is for all
+				'post_type'   => 'poca_podcast', // or 'post', 'page'.
+				'orderby'     => 'title', // or 'date', 'rand'.
+				'order'       => 'ASC', // or 'DESC'.
+			);
+		} else {
+			$args = array(
+				'numberposts'           => $number_of_posts, // -1 is for all
+				'post_type'             => 'poca_podcast', // or 'post', 'page'.
+				'orderby'               => 'title', // or 'date', 'rand'.
+				'order'                 => 'ASC', // or 'DESC'.
+				'poca_podcast_category' => $current_tax,
+			);
+		}
+		// Get the posts.
+		$podcast_posts = get_posts( $args );
+		$output        = '';
+		// If there are posts.
+		?>
+		<div class="row poca-portfolio">
+		<?php
+		if ( $podcast_posts ) {
+			// Loop the posts.
+			foreach ( $podcast_posts as $podcast_post ) {
+				$cats = get_the_category( $podcast_post->ID );
+				?>
+			<!-- Single gallery Item -->
+			<div class="col-12 col-md-6 single_gallery_item entre wow fadeInUp" data-wow-delay="0.2s">
+			<!-- Welcome Music Area -->
+				<div class="poca-music-area style-2 d-flex align-items-center flex-wrap">
+					<div class="poca-music-thumbnail">
+					<!-- <img src="./img/bg-img/5.jpg" alt=""> -->
+					<?php echo get_the_post_thumbnail( $podcast_post->ID ); ?>
+					</div>
+					<div class="poca-music-content text-center">
+					<span class="music-published-date mb-2"><?php echo get_the_date( 'F j, Y', $podcast_post->ID ); ?></span>
+					<h2><?php echo esc_html( get_the_title( $podcast_post->ID ) ); ?></h2>
+					<div class="music-meta-data">
+					<?php $cats = wp_get_post_terms( $podcast_post->ID, 'poca_podcast_category' ); ?>
+						<p>By <a href="#" class="music-author">Admin</a> | <a href="#" class="music-catagory">
+						<?php
+						foreach ( $cats as $cat1 ) {
+							echo esc_html( $cat1->name . ' ' );
+						}
+						?>
+						</a> | <a href="#" class="music-duration"><?php echo esc_html( get_the_time( '', $podcast_post->ID ) ); ?></a></p>
+					</div>
+					<!-- Music Player -->
+					<div class="poca-music-player">
+						<audio preload="auto" controls>
+						<source src="<?php echo esc_html( get_template_directory_uri() . '/audio/dummy-audio.mp3' ); ?>">
+						</audio>
+					</div>
+					<!-- Likes, Share & Download -->
+					<div class="likes-share-download d-flex align-items-center justify-content-between">
+						<a href="#"><i class="fa fa-heart" aria-hidden="true"></i> Like (29)</a>
+						<div>
+						<a href="#" class="mr-4"><i class="fa fa-share-alt" aria-hidden="true"></i> Share(04)</a>
+						<a href="#"><i class="fa fa-download" aria-hidden="true"></i> Download (12)</a>
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>	
+		<?php } ?>
+	<?php } ?>
+	</div>
+		<?php
+	}
+	// Always die in functions echoing ajax content.
+	die();
+}
+
+add_action( 'wp_ajax_podcast_request', 'podcast_ajax_request' );
+
+// If you wanted to also use the function for non-logged in users (in a theme for example).
+add_action( 'wp_ajax_nopriv_podcast_request', 'podcast_ajax_request' );

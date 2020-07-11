@@ -72,10 +72,7 @@
 			?>
               <!-- Top Search Area -->
               <div class="top-search-area">
-                <form action="index.html" method="post">
-                  <input type="search" name="top-search-bar" class="form-control" placeholder="Search and hit enter...">
-                  <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                </form>
+                <?php get_sidebar('sidebar-3'); ?>
               </div>
 
               <!-- Top Social Area -->

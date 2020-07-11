@@ -32,7 +32,7 @@ jQuery(document).ready(function($) {
                 'name'    : name,
                 'email'   : email,
                 'feedback': fb,
-                'nonce': example_ajax_obj.nonce,
+                'nonce'   : example_ajax_obj.nonce,
             },
             success:function(data) {
                 // This outputs the result of the ajax request

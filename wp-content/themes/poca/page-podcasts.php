@@ -107,14 +107,22 @@ get_header();
       </div>
     </div>
 
-    <div class="container">
+    <div class="container" id="ajax_poca_podcast">
       <div class="row poca-portfolio">
     <?php
       $args = array( 
-        'numberposts'		=> -1, // -1 is for all
+        'numberposts'	=> -1, // -1 is for all
         'post_type'		=> 'poca_podcast', // or 'post', 'page'
         'orderby' 		=> 'title', // or 'date', 'rand'
-        'order' 		=> 'ASC', // or 'DESC'
+        'order' 		  => 'ASC', // or 'DESC'
+      //  'poca_podcast_category' => 'tech',
+      //   'tax_query' => array(
+      //     array(
+      //         'taxonomy' => 'poca_podcast_category',
+      //         'field'    => 'slug',
+      //         'terms'    => 'tech'
+      //     )
+      // )
         //'category' 		=> $category_id,
         //'exclude'		=> get_the_ID()
         // ...
@@ -141,7 +149,12 @@ get_header();
               <span class="music-published-date mb-2"><?php echo get_the_date('F j, Y', $podcast_post->ID); ?></span>
               <h2><?php echo get_the_title($podcast_post->ID); ?></h2>
               <div class="music-meta-data">
-                <p>By <a href="#" class="music-author">Admin</a> | <a href="#" class="music-catagory"><?php echo get_the_category($podcast_post->ID); ?></a> | <a href="#" class="music-duration"><?php echo get_the_time( '', $podcast_post->ID ); ?></a></p>
+                <?php $cats = wp_get_post_terms( $podcast_post->ID, 'poca_podcast_category' ); ?>
+                <p>By <a href="#" class="music-author">Admin</a> | <a href="#" class="music-catagory">
+                  <?php foreach( $cats as $cat1 ){
+                    echo $cat1->name . " ";
+                  } ?>
+                </a> | <a href="#" class="music-duration"><?php echo get_the_time( '', $podcast_post->ID ); ?></a></p>
               </div>
               <!-- Music Player -->
               <div class="poca-music-player">
